@@ -9,7 +9,9 @@ public class Main {
         int superior = students.size() - 1;
         int numRandom = (int) (Math.random() * (superior - inferior + 1)) + inferior;
         if (!students.isEmpty()) {
-            System.out.println("El alumno afortunado que realizará la presentación és:\n\t " + students.get(numRandom));
+            System.out.println("La persona afortunada que realizará la presentación és:\n\t " +
+                               students.get(numRandom)
+            );
             students.remove(numRandom);
             writeNewList(students);
         }
@@ -25,17 +27,21 @@ public class Main {
                     students.add(line);
                 }
             }
-            if (students.isEmpty()) {
-                throw new ListEmpty("la lista esta vacía ");
-            }
+            checkEmptyList(students);
         } catch (FileNotFoundException e) {
             System.out.println("Archivo no encontrado: " + e.getMessage());
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ListEmpty e) {
             System.out.println("Error, " + e.getMessage());
+        } catch (ListEmpty e) {
+            System.out.println(e.getMessage());
         }
         return students;
+    }
+
+    private static void checkEmptyList(ArrayList<String> students) {
+        if (students.isEmpty()) {
+            throw new ListEmpty("Ya no quedan alumnos por hacer la presentación, la lista esta vacía ");
+        }
     }
 
     public static void writeNewList(ArrayList<String> students) {
